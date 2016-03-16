@@ -79,7 +79,6 @@ ProjectGenerator.prototype.project = function project() {
 
   this.template('_package.json', 'package.json');
   this.template('_.sass-lint.yml', '.sass-lint.yml');
-  this.template('public/index.html', 'public/index.html');
   this.copy('Brocfile.js', 'Brocfile.js');
   this.copy('testem.json', 'testem.json');
   this.copy('_.eslintrc', '.eslintrc');
@@ -87,6 +86,12 @@ ProjectGenerator.prototype.project = function project() {
 
   copyDir.forEach(function(file) {
     _this.bulkDirectory(file, file);
+  });
+
+  this.composeWith('git-init', {
+    options: { commit: 'Generated QUnit Project' }
+  }, {
+    local: require.resolve('generator-git-init')
   });
 
   // This callback is fired when the generator has completed,
