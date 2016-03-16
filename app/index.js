@@ -14,7 +14,7 @@ var ProjectGenerator = module.exports = function ProjectGenerator(args, options,
   yeoman.generators.Base.apply(this, arguments);
 
   // Welcome
-  console.log('\nWelcome to your new SASS Project.\n');
+  console.log('\nWelcome to your new QUnit Project.\n');
 
   // Import Package.json
   this.pkg = JSON.parse(wiring.readFileAsString(path.join(__dirname, '../package.json')));
@@ -95,7 +95,7 @@ ProjectGenerator.prototype.project = function project() {
     console.log(
     '\n------------------------------------------------' +
     '\n' +
-    '\nYour SASS project is ready to go!' +
+    '\nYour QUnit project is ready to go!' +
     '\n' +
     '\nTo start the server run: npm run serve');
 
