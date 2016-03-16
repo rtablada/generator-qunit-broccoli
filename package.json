@@ -1,7 +1,7 @@
 {
-  "name": "generator-sass-broccoli",
-  "version": "1.2.2",
-  "description": "A Yeoman generator for SASS projects built with Broccoli",
+  "name": "generator-qunit-broccoli",
+  "version": "1.0.0",
+  "description": "A Yeoman generator for QUnit & SASS projects built with Broccoli",
   "files": [
     "app"
   ],
