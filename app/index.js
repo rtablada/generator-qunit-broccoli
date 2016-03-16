@@ -72,13 +72,13 @@ ProjectGenerator.prototype.project = function project() {
   var copyDir = [
     'styles',
     'tests',
-    'public',
     'src',
   ];
   var _this = this;
 
   this.template('_package.json', 'package.json');
   this.template('_.sass-lint.yml', '.sass-lint.yml');
+  this.template('public/index.html', 'public/index.html');
   this.copy('Brocfile.js', 'Brocfile.js');
   this.copy('testem.json', 'testem.json');
   this.copy('_.eslintrc', '.eslintrc');

@@ -30,4 +30,4 @@ const appScript = Concat(babelScript, {
   outputFile: '/app.js',
 });
 
-module.exports = new Merge(['public', styles, appScript]);
+module.exports = new Merge([public, styles, appScript]);
