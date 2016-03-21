@@ -4,8 +4,9 @@ const LiveReload = require('broccoli-inject-livereload');
 const Funnel = require('broccoli-funnel');
 const Babel = require('broccoli-babel-transpiler');
 const Concat = require('broccoli-sourcemap-concat');
+const rename = require('broccoli-stew').rename;
 
-const public = new LiveReload('public');
+const pubFiles = new LiveReload('public');
 
 const stylePaths = [
   'styles',
@@ -17,7 +18,6 @@ const stylePaths = [
 const vendorFileNames = [
   'loader.js',
 ];
-
 
 const vendorFolder = new Merge([
   'node_modules/loader.js/lib/loader/',
@@ -37,8 +37,8 @@ const styles = new Sass(stylePaths, 'app.scss', 'app.css', {});
 const babelScript = Babel('src', {
   browserPolyfill: true,
   stage: 0,
-  // moduleIds: true,
-  // modules: 'amd',
+  moduleIds: true,
+  modules: 'amd',
 });
 
 const appScript = Concat(babelScript, {
@@ -48,4 +48,15 @@ const appScript = Concat(babelScript, {
   outputFile: '/app.js',
 });
 
-module.exports = new Merge([public, styles, appScript, vendor]);
+const testTree = rename('tests', 'index.html', 'test.html');
+
+const testJs = Concat(testTree, {
+  inputFiles: ['**/*.js'],
+  outputFile: '/tests.js',
+});
+
+const testHTML = new Funnel(testTree, {
+  files: ['test.html'],
+});
+
+module.exports = new Merge([pubFiles, styles, appScript, vendor, testJs, testHTML]);

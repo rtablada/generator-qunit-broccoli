@@ -1,6 +1,5 @@
 {
-  "before_tests": "broccoli build dist",
-  "after_tests": "rm -rf dist",
+  "test_page": "test.html",
 
   "framework": "qunit",
   "launch_in_ci": [
@@ -9,10 +8,5 @@
   "launch_in_dev": [
     "Chrome"
   ],
-  "disable_watching": true,
-  "src_files": [
-    "dist/vendor.js",
-    "dist/app.js",
-    "tests/**/*.js"
-  ]
+  "disable_watching": true
 }
