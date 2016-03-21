@@ -4,8 +4,7 @@
   "description": "",
   "main": "public/index.html",
   "scripts": {
-    "test": "./node_modules/.bin/testem",
-    "serve": "./node_modules/.bin/broccoli-lr serve",
+    "serve": "./node_modules/.bin/broccoli-testem serve",
     "build": "./node_modules/.bin/broccoli build dist",
     "lint": "./node_modules/.bin/sass-lint",
     "esfix": "./node_modules/.bin/eslint src --fix && ./node_modules/.bin/eslint tests --fix"
@@ -14,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "font-awesome": "^4.5.0",
+    "loader.js": "^4.0.1",
     "normalize-css": "^2.3.1",
     "yoga-sass": "^1.0.1"
   },
@@ -23,7 +23,7 @@
     "broccoli-cli": "^1.0.0",
     "broccoli-funnel": "^1.0.1",
     "broccoli-inject-livereload": "^0.2.0",
-    "broccoli-lr": "^0.2.0",
+    "broccoli-testem-cli": "^1.0.0",
     "broccoli-merge-trees": "^1.1.1",
     "broccoli-sass-source-maps": "^1.6.0",
     "broccoli-sourcemap-concat": "^1.1.6",
