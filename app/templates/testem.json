@@ -1,6 +1,6 @@
 {
-  "before_tests": "broccoli build test-dist",
-  "after_tests": "rm -rf test-dist",
+  "before_tests": "broccoli build dist",
+  "after_tests": "rm -rf dist",
 
   "framework": "qunit",
   "launch_in_ci": [
@@ -11,8 +11,8 @@
   ],
   "disable_watching": true,
   "src_files": [
-    "test-dist/vendor.js",
-    "test-dist/app.js",
+    "dist/vendor.js",
+    "dist/app.js",
     "tests/**/*.js"
   ]
 }
