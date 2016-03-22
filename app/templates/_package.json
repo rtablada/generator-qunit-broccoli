@@ -5,7 +5,8 @@
   "main": "public/index.html",
   "scripts": {
     "serve": "./node_modules/.bin/ember serve",
-    "build": "./node_modules/.bin/ember test",
+    "test": "./node_modules/.bin/ember test -s",
+    "build": "./node_modules/.bin/ember build",
     "lint": "./node_modules/.bin/sass-lint",
     "esfix": "./node_modules/.bin/eslint src --fix && ./node_modules/.bin/eslint tests --fix"
   },
