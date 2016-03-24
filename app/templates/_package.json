@@ -4,7 +4,7 @@
   "description": "",
   "main": "public/index.html",
   "scripts": {
-    "serve": "./node_modules/.bin/ember serve",
+    "serve": "./node_modules/.bin/ember serve -lrp 35729",
     "test": "./node_modules/.bin/ember test -s",
     "build": "./node_modules/.bin/ember build",
     "lint": "./node_modules/.bin/sass-lint",
