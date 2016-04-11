@@ -18,10 +18,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rtablada/generator-sass-broccoli.git"
+    "url": "git+https://github.com/rtablada/generator-qunit-broccoli.git"
   },
   "bugs": {
-    "url": "https://github.com/rtablada/generator-sass-broccoli/issues"
+    "url": "https://github.com/rtablada/generator-qunit-broccoli/issues"
   },
-  "homepage": "https://github.com/rtablada/generator-sass-broccoli#readme"
+  "homepage": "https://github.com/rtablada/generator-qunit-broccoli#readme"
 }

@@ -4,11 +4,11 @@
   "description": "",
   "main": "public/index.html",
   "scripts": {
-    "serve": "./node_modules/.bin/ember serve -lrp 35729",
-    "test": "./node_modules/.bin/ember test -s",
-    "build": "./node_modules/.bin/ember build",
-    "lint": "./node_modules/.bin/sass-lint",
-    "esfix": "./node_modules/.bin/eslint src --fix && ./node_modules/.bin/eslint tests --fix"
+    "serve": "ember serve -lrp 35729",
+    "test": "ember test -s",
+    "build": "ember build",
+    "lint": "sass-lint",
+    "esfix": "eslint src --fix && eslint tests --fix"
   },
   "author": "",
   "license": "ISC",
