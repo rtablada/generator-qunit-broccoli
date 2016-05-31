@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/rtablada/generator-qunit-broccoli/issues"
   },
-  "homepage": "https://github.com/rtablada/generator-qunit-broccoli#readme"
+  "homepage": "https://github.com/rtablada/generator-qunit-broccoli#readme",
+  "devDependencies": {
+    "whatwg-fetch": "^1.0.0"
+  }
 }
