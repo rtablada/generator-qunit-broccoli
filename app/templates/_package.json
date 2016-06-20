@@ -4,11 +4,12 @@
   "description": "",
   "main": "public/index.html",
   "scripts": {
-    "serve": "ember serve -lrp 35729",
+    "start": "ember serve -lrp 35729",
     "test": "ember test -s",
     "build": "ember build",
     "lint": "sass-lint",
-    "esfix": "eslint src --fix && eslint tests --fix"
+    "esfix": "eslint src --fix && eslint tests --fix",
+    "deploy": "ember build -e production && cp dist/index.html dist/200.html && surge dist my-app.surge.sh"
   },
   "author": "",
   "license": "ISC",
