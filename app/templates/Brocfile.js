@@ -1,12 +1,18 @@
 const Merge = require('broccoli-merge-trees');
 const Sass = require('broccoli-sass-source-maps');
 const LiveReload = require('broccoli-inject-livereload');
+const Autoprefixer = require('broccoli-autoprefixer');
+const CssOptimizer = require('broccoli-csso');
 const Funnel = require('broccoli-funnel');
 const Babel = require('broccoli-babel-transpiler');
 const Concat = require('broccoli-sourcemap-concat');
 const rename = require('broccoli-stew').rename;
 
-const pubFiles = new LiveReload('public');
+let pubFiles = new LiveReload('public');
+
+if (process.env.EMBER_ENV === 'production') {
+  pubFiles = 'public';
+}
 
 const stylePaths = [
   'styles',
@@ -34,8 +40,6 @@ const vendor = Concat(vendorFiles, {
   outputFile: '/vendor.js',
 });
 
-const styles = new Sass(stylePaths, 'app.scss', 'app.css', {});
-
 const babelScript = Babel('src', {
   browserPolyfill: true,
   stage: 0,
@@ -50,15 +54,23 @@ const appScript = Concat(babelScript, {
   outputFile: '/app.js',
 });
 
-const testTree = rename('tests', 'index.html', 'test.html');
+const compiledSass = new Sass(stylePaths, 'app.scss', 'app.css', {});
+const optimizedCSS = new CssOptimizer(compiledSass);
+const styles = new Autoprefixer(optimizedCSS);
 
-const testJs = Concat(testTree, {
-  inputFiles: ['**/*.js'],
-  outputFile: '/tests.js',
-});
+if (process.env.EMBER_ENV === 'test') {
+  const testTree = rename('tests', 'index.html', 'test.html');
 
-const testHTML = new Funnel(testTree, {
-  files: ['test.html'],
-});
+  const testJs = Concat(testTree, {
+    inputFiles: ['**/*.js'],
+    outputFile: '/tests.js',
+  });
 
-module.exports = new Merge([pubFiles, styles, appScript, vendor, testJs, testHTML]);
+  const testHTML = new Funnel(testTree, {
+    files: ['test.html'],
+  });
+
+  module.exports = new Merge([pubFiles, styles, appScript, vendor, testJs, testHTML]);
+} else {
+  module.exports = new Merge([pubFiles, styles, appScript, vendor]);
+}
