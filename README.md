@@ -24,7 +24,7 @@ This will ask you for your project name, and a few details to get up and started
 Once the project has been created, move into the directory and then run:
 
 ```bash
-npm run serve
+npm run start
 ```
 
 The `Brocfile.js` injects live reload into HTML files in the `public` directory.
