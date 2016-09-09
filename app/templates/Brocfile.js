@@ -1,4 +1,6 @@
 'use strict';
+/* eslint-env node */
+
 const Merge = require('broccoli-merge-trees');
 const Sass = require('broccoli-sass-source-maps');
 const LiveReload = require('broccoli-inject-livereload');
@@ -30,25 +32,25 @@ const vendorFileNames = [
 const vendorFolder = new Merge([
   'node_modules/whatwg-fetch/',
   'node_modules/loader.js/lib/loader/',
-], {overwrite: true});
+], { overwrite: true });
 
 const vendorFiles = new Funnel(vendorFolder, {
   files: vendorFileNames,
 });
 
-const vendor = Concat(vendorFiles, {
+const vendor = new Concat(vendorFiles, {
   inputFiles: vendorFileNames,
   outputFile: '/vendor.js',
 });
 
-const babelScript = Babel('src', {
+const babelScript = new Babel('src', {
   browserPolyfill: true,
   stage: 0,
   moduleIds: true,
   modules: 'amd',
 });
 
-const appScript = Concat(babelScript, {
+const appScript = new Concat(babelScript, {
   inputFiles: [
     '**/*.js',
   ],
@@ -62,7 +64,7 @@ const styles = new Autoprefixer(optimizedCSS);
 if (process.env.EMBER_ENV === 'test') {
   const testTree = rename('tests', 'index.html', 'test.html');
 
-  const testJs = Concat(testTree, {
+  const testJs = new Concat(testTree, {
     inputFiles: ['**/*.js'],
     outputFile: '/tests.js',
   });
