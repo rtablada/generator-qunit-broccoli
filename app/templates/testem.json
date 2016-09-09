@@ -1,12 +1,17 @@
 {
-  "test_page": "test.html",
+  "src_files": [
+    "tests.js"
+  ],
 
   "framework": "qunit",
+
   "launch_in_ci": [
     "Chrome"
   ],
+
   "launch_in_dev": [
     "Chrome"
   ],
+
   "disable_watching": true
 }

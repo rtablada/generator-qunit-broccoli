@@ -70,9 +70,8 @@ ProjectGenerator.prototype.prompts = function prompts() {
 
 ProjectGenerator.prototype.project = function project() {
   var copyDir = [
-    'styles',
     'tests',
-    'src',
+    'app',
   ];
   var _this = this;
 
@@ -81,6 +80,7 @@ ProjectGenerator.prototype.project = function project() {
   this.template('public/index.html', 'public/index.html');
   this.copy('Brocfile.js', 'Brocfile.js');
   this.copy('testem.json', 'testem.json');
+  this.copy('_.babelrc', '.babelrc');
   this.copy('_.eslintrc', '.eslintrc');
   this.copy('_.gitignore', '.gitignore');
 
@@ -89,7 +89,7 @@ ProjectGenerator.prototype.project = function project() {
   });
 
   this.composeWith('git-init', {
-    options: { commit: 'Generated QUnit Project' }
+    options: { commit: 'Generated Broccoli Browserify Project' }
   }, {
     local: require.resolve('generator-git-init')
   });
@@ -102,8 +102,11 @@ ProjectGenerator.prototype.project = function project() {
     '\n' +
     '\nYour QUnit project is ready to go!' +
     '\n' +
-    '\nTo start the server run: npm run serve');
-
+    '\nTo get started:' +
+    '\n npm start' +
+    '\n' +
+    '\nTo get testing:' +
+    '\n npm test');
   }, this);
 
   this.installDependencies({

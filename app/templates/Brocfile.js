@@ -8,8 +8,8 @@ const Autoprefixer = require('broccoli-autoprefixer');
 const CssOptimizer = require('broccoli-csso');
 const Funnel = require('broccoli-funnel');
 const Babel = require('broccoli-babel-transpiler');
-const Concat = require('broccoli-sourcemap-concat');
-const rename = require('broccoli-stew').rename;
+const mv = require('broccoli-stew').mv;
+const browserify = require('broccoli-browserify-cache');
 
 let pubFiles = new LiveReload('public');
 
@@ -22,37 +22,11 @@ const stylePaths = [
   'node_modules',
 ];
 
-const vendorFileNames = [
-  'fetch.js',
-  'loader.js',
-];
+const babelScript = new Babel('app');
 
-const vendorFolder = new Merge([
-  'node_modules/whatwg-fetch/',
-  'node_modules/loader.js/lib/loader/',
-], { overwrite: true });
-
-const vendorFiles = new Funnel(vendorFolder, {
-  files: vendorFileNames,
-});
-
-const vendor = new Concat(vendorFiles, {
-  inputFiles: vendorFileNames,
-  outputFile: '/vendor.js',
-});
-
-const babelScript = new Babel('app', {
-  browserPolyfill: true,
-  stage: 0,
-  moduleIds: true,
-  modules: 'amd',
-});
-
-const appScript = new Concat(babelScript, {
-  inputFiles: [
-    '**/*.js',
-  ],
-  outputFile: '/app.js',
+const appScript = browserify(babelScript, {
+  entries: ['./index'],
+  outputFile: 'app.js',
 });
 
 const compiledSass = new Sass(stylePaths, 'app.scss', 'app.css', {});
@@ -60,18 +34,21 @@ const optimizedCSS = new CssOptimizer(compiledSass);
 const styles = new Autoprefixer(optimizedCSS);
 
 if (process.env.EMBER_ENV === 'test') {
-  const testTree = rename('tests', 'index.html', 'test.html');
-
-  const testJs = new Concat(testTree, {
-    inputFiles: ['**/*.js'],
-    outputFile: '/tests.js',
-  });
-
-  const testHTML = new Funnel(testTree, {
+  const testHTML = new Funnel('tests', {
     files: ['test.html'],
   });
 
-  module.exports = new Merge([pubFiles, styles, appScript, vendor, testJs, testHTML]);
+  const testTree = new Merge([
+    mv(babelScript, 'app'),
+    mv(new Babel('tests'), 'tests'),
+  ]);
+
+  const testJs = browserify(testTree, {
+    entries: ['./tests/index-test'],
+    outputFile: 'tests.js',
+  });
+
+  module.exports = new Merge([pubFiles, styles, appScript, testJs, testHTML]);
 } else {
-  module.exports = new Merge([pubFiles, styles, appScript, vendor]);
+  module.exports = new Merge([pubFiles, styles, appScript]);
 }

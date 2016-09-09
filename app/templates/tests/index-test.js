@@ -1,3 +1,5 @@
-'use strict';
+/* eslint-env qunit */
 
-/* global require */
+test('it is working', (assert) => {
+  assert.ok(true);
+});
