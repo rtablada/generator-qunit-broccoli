@@ -18,10 +18,8 @@ if (process.env.EMBER_ENV === 'production') {
 }
 
 const stylePaths = [
-  'styles',
-  'node_modules/normalize-css',
-  'node_modules/font-awesome/scss',
-  'node_modules/yoga-sass/assets',
+  'app/styles',
+  'node_modules',
 ];
 
 const vendorFileNames = [
@@ -43,7 +41,7 @@ const vendor = new Concat(vendorFiles, {
   outputFile: '/vendor.js',
 });
 
-const babelScript = new Babel('src', {
+const babelScript = new Babel('app', {
   browserPolyfill: true,
   stage: 0,
   moduleIds: true,
