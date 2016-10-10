@@ -36,10 +36,6 @@ const optimizedCSS = new CssOptimizer(compiledSass);
 const styles = new Autoprefixer(optimizedCSS);
 
 if (process.env.EMBER_ENV === 'test') {
-  const testHTML = new Funnel('tests', {
-    files: ['test.html'],
-  });
-
   const testTree = new Merge([
     mv(babelScript, 'app'),
     mv(new Babel('tests'), 'tests'),
@@ -50,7 +46,7 @@ if (process.env.EMBER_ENV === 'test') {
     outputFile: 'tests.js',
   });
 
-  module.exports = new Merge([pubFiles, styles, appScript, testJs, testHTML]);
+  module.exports = new Merge([pubFiles, styles, appScript, testJs]);
 } else {
   module.exports = new Merge([pubFiles, styles, appScript]);
 }
