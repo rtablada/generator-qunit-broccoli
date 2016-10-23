@@ -13,6 +13,8 @@ var ProjectGenerator = module.exports = function ProjectGenerator(args, options,
   // Apply the Base Generator
   yeoman.generators.Base.apply(this, arguments);
 
+  this.argument('projectName', { type: String, required: false });
+
   // Welcome
   console.log('\nWelcome to your new QUnit Project.\n');
 
@@ -31,6 +33,14 @@ ProjectGenerator.prototype.prompts = function prompts() {
   var prompts = {
 
     project: [
+    ],
+
+    config: [],
+
+  };
+
+  if (!this.projectName) {
+    prompts.project = [
       {
         name: 'projectName',
         message: 'What is the name of your project?',
@@ -41,11 +51,10 @@ ProjectGenerator.prototype.prompts = function prompts() {
         message: 'Would you like to create a new directory for your project?',
         default: true,
       },
-    ],
-
-    config: [],
-
-  };
+    ]
+  } else {
+    this.newDirectory = true;
+  }
 
   this.prompt(prompts.project, function(props) {
 
