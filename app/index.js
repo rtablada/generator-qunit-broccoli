@@ -118,9 +118,7 @@ ProjectGenerator.prototype.project = function project() {
     '\n npm test');
   }, this);
 
-  this.installDependencies({
-    bower: false,
-    skipMessage: true,
-    callback: done,
-  });
+  var yarn = this.spawnCommand('yarn', []);
+
+  yarn.on('close', done);
 };
