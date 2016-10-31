@@ -81,6 +81,7 @@ ProjectGenerator.prototype.project = function project() {
   this.copy('Brocfile.js', 'Brocfile.js');
   this.copy('testem.json', 'testem.json');
   this.copy('_.babelrc', '.babelrc');
+  this.copy('_.env', '.env');
   this.copy('_.eslintrc', '.eslintrc');
   this.copy('_.gitignore', '.gitignore');
 
