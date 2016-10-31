@@ -1,6 +1,6 @@
 {
   "name": "generator-qunit-broccoli",
-  "version": "6.1.1",
+  "version": "6.2.0",
   "description": "A Yeoman generator for QUnit & SASS projects built with Broccoli",
   "files": [
     "app"
