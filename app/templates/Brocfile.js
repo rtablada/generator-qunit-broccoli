@@ -15,6 +15,9 @@ const browserify = require('broccoli-watchify');
 const envify = require('envify');
 // const vueify = require('vueify');
 
+
+// Edit this function to add browserify transforms,
+// external files, bundles, and more
 function browserifyInit(b) {
   b.transform(envify);
   // b.transform(vueify);
