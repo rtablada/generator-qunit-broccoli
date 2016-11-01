@@ -81,6 +81,7 @@ ProjectGenerator.prototype.project = function project() {
   var copyDir = [
     'tests',
     'app',
+    'server',
   ];
   var _this = this;
 
