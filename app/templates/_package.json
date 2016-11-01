@@ -21,6 +21,7 @@
     "yoga-sass": "^1.0.1"
   },
   "devDependencies": {
+    "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-es2015": "^6.14.0",
     "broccoli": "^0.16.9",
     "broccoli-autoprefixer": "^4.1.0",
