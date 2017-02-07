@@ -1,4 +1,5 @@
 'use strict';
+
 /* eslint-env node */
 
 require('dotenv').config();
@@ -7,21 +8,30 @@ const Sass = require('broccoli-sass-source-maps');
 const LiveReload = require('broccoli-inject-livereload');
 const Autoprefixer = require('broccoli-autoprefixer');
 const CssOptimizer = require('broccoli-csso');
-const Funnel = require('broccoli-funnel');
+const Rollup = require('broccoli-rollup');
 const Babel = require('broccoli-babel-transpiler');
 const mv = require('broccoli-stew').mv;
 const rm = require('broccoli-stew').rm;
-const browserify = require('broccoli-watchify');
-const envify = require('envify');
-// const vueify = require('vueify');
 
 
-// Edit this function to add browserify transforms,
-// external files, bundles, and more
-function browserifyInit(b) {
-  b.transform(envify);
-  // b.transform(vueify);
-}
+const nodeResolve = require('rollup-plugin-node-resolve');
+const replace = require('rollup-plugin-replace');
+const builtins = require('rollup-plugin-node-builtins');
+const globals = require('rollup-plugin-node-globals');
+const commonjs = require('rollup-plugin-commonjs');
+// const vue = require('rollup-plugin-vue');
+
+const plugins = [
+  replace({
+    'process.env.NODE_ENV': JSON.stringify(process.env.EMBER_ENV)
+  }),
+  nodeResolve({ jsnext: true, main: true }),
+  commonjs({ include: 'node_modules/**' }),
+  builtins(),
+  globals(),
+  // vue(),
+];
+
 
 let pubFiles = new LiveReload('public');
 
@@ -31,20 +41,21 @@ if (process.env.EMBER_ENV === 'production') {
 
 const stylePaths = [
   'app/styles',
-  'node_modules',
+  'node_modules/font-awesome',
+  'node_modules/normalize-css',
+  'node_modules/yoga-sass/assets',
 ];
 const appNoSass = rm('app', '**/*.scss');
 
 const babelScript = new Babel(appNoSass);
 
-const appScript = browserify(babelScript, {
-  browserify: {
-    entries: ['./index'],
-    debug: true
-  },
-  outputFile: 'app.js',
-
-  init: browserifyInit,
+const appScript = new Rollup(babelScript, {
+  rollup: {
+    sourceMap: true,
+    entry: './index.js',
+    plugins,
+    targets: [{ dest: 'app.js', format: 'iife', }]
+  }
 });
 
 const compiledSass = new Sass(stylePaths, 'app.scss', 'app.css', {});
@@ -57,14 +68,15 @@ if (process.env.EMBER_ENV === 'test') {
     mv(new Babel('tests'), 'tests'),
   ]);
 
-  const testJs = browserify(testTree, {
-    browserify: {
-      entries: ['./tests/index-test'],
-      debug: true
-    },
-    outputFile: 'tests.js',
-
-    init: browserifyInit,
+  const testJs = new Rollup(testTree, {
+    rollup: {
+      entry: './tests/index-test.js',
+      plugins: [
+        nodeResolve({ jsnext: true, main: true }),
+        commonjs({ include: 'node_modules/**' }),
+      ],
+      targets: [{ dest: 'tests.js', format: 'iife', }]
+    }
   });
 
   module.exports = new Merge([pubFiles, styles, appScript, testJs]);

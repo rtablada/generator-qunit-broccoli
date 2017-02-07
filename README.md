@@ -70,7 +70,7 @@ The rules installed beyond the [SASS Lint](https://github.com/sasstools/qunit-li
 ## Yarn Benchmarks
 
 This generator makes an incredibly strong starting project and build stack that can be used to make production quality builds out-of-the-box!
-But, this means a lot of dependancies including ember-cli, Browserify, autoprefixer, lib-sass, Babel, and more.
+But, this means a lot of dependancies including ember-cli, Rollup, autoprefixer, lib-sass, Babel, and more.
 
 With all of the dependancies required this project has been taking longer and longer to run.
 Luckily, yarn has helped this a ton!
