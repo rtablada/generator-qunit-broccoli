@@ -81,6 +81,7 @@ ProjectGenerator.prototype.project = function project() {
   var copyDir = [
     'tests',
     'app',
+    'server',
   ];
   var _this = this;
 
@@ -90,7 +91,8 @@ ProjectGenerator.prototype.project = function project() {
   this.copy('Brocfile.js', 'Brocfile.js');
   this.copy('testem.json', 'testem.json');
   this.copy('_.babelrc', '.babelrc');
-  this.copy('_.eslintrc', '.eslintrc');
+  this.copy('_.env', '.env');
+  this.copy('_.eslintrc.js', '.eslintrc.js');
   this.copy('_.gitignore', '.gitignore');
 
   copyDir.forEach(function(file) {

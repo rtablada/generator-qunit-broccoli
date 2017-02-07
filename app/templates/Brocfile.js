@@ -1,6 +1,7 @@
 'use strict';
 /* eslint-env node */
 
+require('dotenv').config();
 const Merge = require('broccoli-merge-trees');
 const Sass = require('broccoli-sass-source-maps');
 const LiveReload = require('broccoli-inject-livereload');
@@ -10,7 +11,17 @@ const Funnel = require('broccoli-funnel');
 const Babel = require('broccoli-babel-transpiler');
 const mv = require('broccoli-stew').mv;
 const rm = require('broccoli-stew').rm;
-const browserify = require('broccoli-browserify-cache');
+const browserify = require('broccoli-watchify');
+const envify = require('envify');
+// const vueify = require('vueify');
+
+
+// Edit this function to add browserify transforms,
+// external files, bundles, and more
+function browserifyInit(b) {
+  b.transform(envify);
+  // b.transform(vueify);
+}
 
 let pubFiles = new LiveReload('public');
 
@@ -27,8 +38,13 @@ const appNoSass = rm('app', '**/*.scss');
 const babelScript = new Babel(appNoSass);
 
 const appScript = browserify(babelScript, {
-  entries: ['./index'],
+  browserify: {
+    entries: ['./index'],
+    debug: true
+  },
   outputFile: 'app.js',
+
+  init: browserifyInit,
 });
 
 const compiledSass = new Sass(stylePaths, 'app.scss', 'app.css', {});
@@ -42,8 +58,13 @@ if (process.env.EMBER_ENV === 'test') {
   ]);
 
   const testJs = browserify(testTree, {
-    entries: ['./tests/index-test'],
+    browserify: {
+      entries: ['./tests/index-test'],
+      debug: true
+    },
     outputFile: 'tests.js',
+
+    init: browserifyInit,
   });
 
   module.exports = new Merge([pubFiles, styles, appScript, testJs]);
