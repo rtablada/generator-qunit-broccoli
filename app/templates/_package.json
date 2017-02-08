@@ -1,5 +1,5 @@
 {
-  "name": "rollup",
+  "name": "<%= utils.slug(projectName) %>",
   "version": "1.0.0",
   "description": "",
   "main": "public/index.html",
