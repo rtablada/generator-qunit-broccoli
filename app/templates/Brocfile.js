@@ -41,7 +41,7 @@ if (process.env.EMBER_ENV === 'production') {
 
 const stylePaths = [
   'app/styles',
-  'node_modules/font-awesome',
+  'node_modules/font-awesome/scss',
   'node_modules/normalize-css',
   'node_modules/yoga-sass/assets',
 ];
