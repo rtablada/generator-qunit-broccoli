@@ -34,7 +34,7 @@ ProjectGenerator.prototype.project = function project() {
   const _this = this;
   const utils = this.utils;
 
-  const moduleName = utils.slug(this.moduleName);
+  const moduleName = i.dasherize(i.underscore(this.moduleName));
   const matches = moduleName.match(/([\w-]+)$/);
   const functionName = i.camelize(i.underscore(matches[1]), false);
   const pathToModule = path.relative(`${moduleName}`, `app/${moduleName}`);
