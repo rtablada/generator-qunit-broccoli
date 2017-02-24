@@ -44,6 +44,7 @@ const stylePaths = [
   'node_modules/font-awesome/scss',
   'node_modules/normalize-css',
   'node_modules/yoga-sass/assets',
+  'node_modules/bulma',
 ];
 const appNoSass = rm('app', '**/*.scss');
 
@@ -71,10 +72,7 @@ if (process.env.EMBER_ENV === 'test') {
   const testJs = new Rollup(testTree, {
     rollup: {
       entry: './tests/index-test.js',
-      plugins: [
-        nodeResolve({ jsnext: true, main: true }),
-        commonjs({ include: 'node_modules/**' }),
-      ],
+      plugins,
       targets: [{ dest: 'tests.js', format: 'iife', }]
     }
   });
