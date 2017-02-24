@@ -54,12 +54,6 @@ ProjectGenerator.prototype.project = function project() {
     console.log(
     '\n------------------------------------------------' +
     '\n' +
-    '\nYour QUnit project is ready to go!' +
-    '\n' +
-    '\nTo get started:' +
-    '\n npm start' +
-    '\n' +
-    '\nTo get testing:' +
-    '\n npm test');
+    '\nYour new module is ready to go!');
   }, this);
 };
