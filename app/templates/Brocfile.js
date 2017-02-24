@@ -44,7 +44,6 @@ const stylePaths = [
   'node_modules/font-awesome/scss',
   'node_modules/normalize-css',
   'node_modules/yoga-sass/assets',
-  'node_modules/bulma',
 ];
 const appNoSass = rm('app', '**/*.scss');
 
