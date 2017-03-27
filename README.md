@@ -1,7 +1,9 @@
 # SASS Broccoli Qunit Generator
 
-This Yeoman generator will create a simple Broccoli project that comes setup for web development with SASS, ES6 modules (using Babel transpiling), QUnit (but ).
+This Yeoman generator will create a simple Broccoli project that comes setup for web development with SASS, Rollup (for module loading), ES6 transpiling using Babel, and QUnit tests with Testem.
 It also will install [Yoga Sass](http://rtablada.github.io/yoga-sass), [Font Awesome](http://fontawesome.io), and [Normalize CSS](https://necolas.github.io/normalize.css/).
+
+Although no extra packages are installed, each project can easily be migrated to using Vue.js with routing and template compilation. See ["Using Vue"](#using-vue).
 
 ## Installing the Generator
 
@@ -42,6 +44,70 @@ npm run build
 ```
 
 This will build the project into a `dist` directory that can be uploaded to services such as Firebase, Surge, or AWS.
+
+## Adding New Modules
+
+This Yeoman generator comes equipped with a command to quickly and easily add new modules with setup for unit tests.
+To create a new module run:
+
+```bash
+yo qunit-broccoli:module reducers/users
+```
+
+This will create a new file `app/reducers/users.js` with the following code:
+
+```js
+export default function users() {
+
+}
+```
+
+And it will also create a file `tests/reducers/users-test.js` with the following code:
+
+```js
+import users from '../../app/reducers/users';
+
+module('reducers/users', () => {
+  test('it exists', (assert) => {
+    assert.ok(users, 'users exists');
+  });
+});
+```
+
+## Using Vue
+
+To add Vue.js support to your newly created project run the command:
+
+```bash
+yarn setup:vue
+```
+
+This will install `vue`, `vue-router`, and all required Rollup plugins to support Vue.js development.
+
+Then, uncomment the following lines in `Brocfile.js`:
+
+* `const vue = require('rollup-plugin-vue');`
+* `vue(),` (within the `plugins` array)
+
+Since Vue.js templates use HTML syntax, you will also need to uncomment the lines in `.eslintrc.js` to load the `html` plugin.
+
+## Client-Side Routing
+
+To allow use of client-side routing, a small change is required in the `server/index.js` file.
+Client-Side routing can be enabled by uncommenting the following lines:
+
+```js
+app.use((req, res, next) => {
+  const acceptHeaders = req.headers.accept || [];
+  const hasHTMLHeader = acceptHeaders.indexOf('text/html') !== -1;
+  if (hasHTMLHeader) {
+    req.serveUrl = '/index.html';
+  }
+  next();
+});
+```
+
+This will redirect any HTML traffic to the `public/index.html` file if the requested file doesn't exist in the final build output.
 
 ## Linting SASS
 
